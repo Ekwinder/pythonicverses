@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load django_markdown %}
+{% block content %}
+
+<div style="margin-top:5%; margin-left:8%; padding-right: 30%;">
+	{% if user.is_authenticated %}
+	<div class='pull-right' id='vote_count' style='font-size: 20px;font-style: italic;'>
+	{% if verse.votes > 0 %}
+	<p style='color:#00FF33'>
+		{% if q.voted == 0 %}
+		<button type="button" id = 'up' data-verse ='{{verse.id}}' class="btn btn-xs btn-submit"><b><span class="glyphicon glyphicon-plus" href="{% url 'upvote' %}" style='color:black'>
+		</span></b></button>
+		{% endif %}
+		{{verse.votes}}<sub>votes</sub>
+		{% if q.voted == 0 %}
+		<button type="button" id = 'down' class="btn btn-xs btn-submit" data-verse ='{{verse.id}}'>
+		<b><span class="glyphicon glyphicon-minus" style='color:black;' href="{% url 'downvote' %}"> 
+		</span></b></button>
+		{% else %}
+	    <button id='refresh' style='color:skyblue;' data-verse ='{{verse.id}}'><span class="glyphicon glyphicon-repeat" href="{% url 'revote' %}" style='color:black'></button>
+		{% endif %}
+		</p>
+	{% elif verse.votes < 0 %}
+		<p style='color:#FF0000'>
+		{% if q.voted == 0 %}
+		<button type="button" id = 'up' data-verse ='{{verse.id}}' class="btn btn-xs btn-submit"><b><span class="glyphicon glyphicon-plus" href="{% url 'upvote' %}" style='color:black'>
+		</span></b></button>		
+		{% endif %}
+		{{verse.votes}}<sub>votes</sub>
+		{% if q.voted == 0 %}
+		<button type="button" id = 'down' class="btn btn-xs btn-submit" data-verse ='{{verse.id}}'>
+		<b><span class="glyphicon glyphicon-minus" style='color:black;' href="{% url 'downvote' %}">
+		</span></b>
+		</button>
+		{% else %}
+	   <button id='refresh' style='color:skyblue;' data-verse ='{{verse.id}}'><span class="glyphicon glyphicon-repeat" href="{% url 'revote' %}" style='color:black'></button>
+		{% endif %}
+		</p>
+	{% else %}
+	<p style='color:grey'>
+		{% if q.voted == 0 %}
+		<button type="button" id = 'up' data-verse ='{{verse.id}}' class="btn btn-xs btn-submit"><b><span class="glyphicon glyphicon-plus" href="{% url 'upvote' %}" style='color:grey'>
+		</span></b></button>		
+		{% endif %}
+		{{verse.votes}}<sub>votes</sub>
+		{% if q.voted == 0 %}
+		<button type="button" id = 'down' class="btn btn-xs btn-submit" data-verse ='{{verse.id}}'>
+	    <b><span class="glyphicon glyphicon-minus" style='color:black;' href="{% url 'downvote' %}">
+	    </span></b></button>
+        {% else %}
+	    <button id='refresh' style='color:skyblue;' data-verse ='{{verse.id}}'><span class="glyphicon glyphicon-repeat" href="{% url 'revote' %}" style='color:black'></button>
+	    {% endif %}
+	    </p>
+	{% endif %}
+</div>
+{% else %}
+<div class='pull-right' id='vote_count' style='font-size: 20px;font-style: italic;'>
+	{% if verse.votes > 0 %}
+	<p style='color:#00FF33'>{{verse.votes}}<sub style='color:skyblue;'>(login to vote)</sub></p>
+{% elif verse.votes < 0 %}
+		<p style='color:#FF0000'>{{verse.votes}}<sub style='color:skyblue;'>(login to vote)</sub></p>
+	{% else %}
+	<p style='color:grey'>{{verse.votes}}<sub style='color:skyblue;'>(login to vote)</sub></p>
+		
+{% endif %}	
+</div>
+{% endif %}
+
+<div>
+<h3 style='color:#708090'>{{ verse.title }}</h3>
+</div>
+{% if verse.author == request.user %}
+Posted by - <a href = "{% url 'profile' %}">Me</a><br> 
+{% else %}
+Posted by - <a href = "{% url 'oprofile' username=verse.author %}">{{verse.author}}</a><br>
+{% endif %} 
+Tagged under -  {% for i in verse.tags.all%}
+<a href="{% url 'verse.views.tags' name=i.name %}">{{ i }} | </a>{% endfor %}
+<br>
+<br>
+<div style='background-color:#F0F8FF'>
+<p style='color:blue'>
+{{verse.text|markdown}}
+</p>
+	
+</div>
+<hr style="color:yellow">
+<br>
+<br>
+</div>
+{% endblock %}

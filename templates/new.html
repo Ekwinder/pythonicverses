@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load django_markdown %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+{{form.media}}
+<h1> New Verse </h1>
+<form  method = 'POST' class="post-form" >{% csrf_token %}
+{% markdown_media %}
+	
+	{{form|crispy}}
+
+</br>	
+<input type="submit" Value = 'CREATE'  class="btn btn-xs btn-primary"/>
+
+{% endblock %}

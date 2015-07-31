@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load django_markdown %}
+
+{% block content %}
+
+{% if not user == request.user %}
+<div class="container">
+{% for u in user %}
+<h2>{{u.first_name}} {{u.last_name}}</h2>
+{% endfor %}
+</div>
+{% else %}
+<div class="container">
+{% if not user.first_name %}
+	{{user}}
+{% else %}
+<h2>{{user.first_name}} {{user.last_name}}</h2>
+{% endif %}
+</div>
+
+{% endif %}
+<div style="margin-top:5%; margin-left:8%; padding-right: 30%;">
+{% for verse in verses %}
+<h3 style='color:#708090'><a href="{% url 'verse.views.verse_detail' pk=verse.pk %}">{{ verse.title }}</a></h3>
+
+Posted by - {{verse.author}}<br> 
+Tagged under -  {% for i in verse.tags.all%}
+<a href="{% url 'verse.views.tags' name=i.name %}">{{ i }} | </a>{% endfor %}
+<br>
+<br>
+<div style='background-color:#F0F8FF'>
+<p style='color:blue'>
+{{verse.text|markdown}}
+</p>
+	
+</div>
+<hr style="color:yellow">
+{% endfor %}
+<br>
+<br>
+</div>
+
+{% endblock %}

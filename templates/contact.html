@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class='col-md-4 col-md-offset-4'>	
+<h1 style="text-align:center;">
+	Contact Us
+</h1>
+{% if not form = null %}
+<form  method='POST' action=''>{% csrf_token %}
+	{{form|crispy}}
+	<input class='btn btn-submit' type = 'submit' value='Submit'/>
+</form>
+{% else %}
+<br>
+<br>
+<p style="text-align:center;"> Your message has been submitted </p>
+{% endif %}
+</div>
+{% endblock %}
