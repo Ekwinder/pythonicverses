@@ -1,16 +1,15 @@
 $(document).ready(function() {
 
-        // JQuery code to be added in here.
-
-});
-
     $('#up').click(function(event){
     event.preventDefault();
-    var verseid;
-    verseid = $(this).attr("data-verse");
+    var verseid = $(this).attr("data-verse");
+    
      $.get('/upvote/', {verse_id: verseid}, function(data){
-               $('#vote_count').html(data)
+               $('#bla').html(data);
+               $('#refresh').show();
                $('#up').hide();
+               $('#down').hide();
+               
            });
 });
 
@@ -19,7 +18,9 @@ $(document).ready(function() {
     var verseid;
     verseid = $(this).attr("data-verse");
      $.get('/downvote/', {verse_id: verseid}, function(data){
-               $('#vote_count').html(data)
+               $('#bla').html(data);
+               $('#refresh').show();
+               $('#up').hide();
                $('#down').hide();
            });
 });
@@ -28,11 +29,12 @@ $(document).ready(function() {
     var verseid;
     verseid = $(this).attr("data-verse");
      $.get('/revote/', {verse_id: verseid}, function(data){
-               $('#vote_count').html(data)
-               $('#re').hide();
+               $('#bla').html(data)
+               $('#refresh').hide();
                $('#down').show();
                $('#up').show();
 
            });
 });
 
+});

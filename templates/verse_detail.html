@@ -8,16 +8,19 @@
 	{% if verse.votes > 0 %}
 	<p style='color:#00FF33'>
 		{% if q.voted == 0 %}
-		<button type="button" id = 'up' data-verse ='{{verse.id}}' class="btn btn-xs btn-submit"><b><span class="glyphicon glyphicon-plus" href="{% url 'upvote' %}" style='color:black'>
+		<button type="button" id = "up" data-verse ="{{verse.id}}"  class="btn btn-xs btn-submit"><b><span class="glyphicon glyphicon-plus" href="{% url 'upvote' %}" style="color:black">
 		</span></b></button>
-		{% endif %}
-		{{verse.votes}}<sub>votes</sub>
-		{% if q.voted == 0 %}
-		<button type="button" id = 'down' class="btn btn-xs btn-submit" data-verse ='{{verse.id}}'>
-		<b><span class="glyphicon glyphicon-minus" style='color:black;' href="{% url 'downvote' %}"> 
+		<b id="bla">
+		{{verse.votes}}</b><sub>votes</sub>
+		
+		<button type="button" id = "down" class="btn btn-xs btn-submit" data-verse ="{{verse.id}}">
+		<b><span class="glyphicon glyphicon-minus" style="color:black;" href="{% url 'downvote' %}"> 
 		</span></b></button>
 		{% else %}
-	    <button id='refresh' style='color:skyblue;' data-verse ='{{verse.id}}'><span class="glyphicon glyphicon-repeat" href="{% url 'revote' %}" style='color:black'></button>
+		<b id="bla">
+		{{verse.votes}}</b><sub>votes</sub>
+		
+	    <button id="refresh" style="color:skyblue;" data-verse ="{{verse.id}}"> <span class="glyphicon glyphicon-repeat" href="{% url 'revote' %}" style='color:black'></button>
 		{% endif %}
 		</p>
 	{% elif verse.votes < 0 %}
@@ -48,6 +51,7 @@
 	    <b><span class="glyphicon glyphicon-minus" style='color:black;' href="{% url 'downvote' %}">
 	    </span></b></button>
         {% else %}
+        this is{{q.voted}} it
 	    <button id='refresh' style='color:skyblue;' data-verse ='{{verse.id}}'><span class="glyphicon glyphicon-repeat" href="{% url 'revote' %}" style='color:black'></button>
 	    {% endif %}
 	    </p>

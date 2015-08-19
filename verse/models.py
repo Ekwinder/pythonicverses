@@ -2,17 +2,17 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 from django_markdown.models import MarkdownField
-
+from taggit_autocomplete.managers import TaggableManager
 
 class Tag(models.Model):
-	name = models.CharField(max_length=200, unique=True)
+	name = models.SlugField(default='python')
 
 	def __unicode__(self):
-		return self.name
+		return str(self.name)
 
 	@classmethod
 	def search(cls, query):
-		return cls.objects.filter(name__icontains=query)
+		return cls.objects.filter(tags__icontains=query)
 
 class Verse(models.Model):
 	author = models.ForeignKey('auth.User')

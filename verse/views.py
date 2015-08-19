@@ -49,6 +49,7 @@ def verse_detail(request, pk):
 		try:
 			q = VoterList.objects.get(Q(voter=request.user),Q(verse=verse))
 			value = q
+			print q
 		except VoterList.DoesNotExist:
 			pass
 		return render(request, 'verse_detail.html',{'verse':verse,'q':value	}) 
@@ -125,10 +126,8 @@ def downvote(request):
 	context = {}
 	if request.method == 'GET':
 		verse_id = request.GET.get('verse_id')
-		print verse_id
 	else:
-		print 'blimey'
-	votes = 0
+		votes = 0
 	if verse_id:
 		verse = Verse.objects.get(id=int(verse_id))
 		if verse:
@@ -151,11 +150,8 @@ def revote(request):
 	context = {}
 	if request.method == 'GET':
 		verse_id = request.GET.get('verse_id')
-		print 'hahaha'
-		print verse_id
 	else:
-		print 'blimey'
-	votes = 0
+		votes = 0
 	was = 0
 	if verse_id:
 		verse = Verse.objects.get(id=int(verse_id))
@@ -189,9 +185,7 @@ class TagSearch(generics.ListAPIView):
 		queryset = Tag.objects.all()
 		name = self.kwargs['q']
 		qlist =  name[2:]
-		print qlist
 		if qlist is not None:
 			queryset = queryset.filter(name__icontains=qlist)
-			print queryset
 
 		return queryset
