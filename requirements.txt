@@ -10,7 +10,7 @@ django-tagging==0.4
 django-tagging-autocomplete==0.4.2
 django-taggit==0.16.2
 -e git+git@github.com:rasca/django-taggit-jquery-tag-it.git@7fe8755781e0428b1d077fcbea68c8fb97349a91#egg=django_taggit_autocomplete-master
-djangorestframework==3.1.3
+djangorestframework==3.11.2
 elasticsearch==1.6.0
 markdown2==2.3.0
 oauthlib==0.7.2
